@@ -231,24 +231,36 @@
 				<div class="pass-section">
 					<div class="pass-section-success">
 						<h2 class="pass-h2">
-		6-Aug-2025 
-		&nbsp;<span id="live-time"></span>
-	</h2>
+        <span id="current-date"></span>
+        &nbsp;<span id="live-time"></span>
+    </h2>
 
-	<script>
-	function updateTime() {
-		const now = new Date();
-		const hours = String(now.getHours()).padStart(2, '0');
-		const minutes = String(now.getMinutes()).padStart(2, '0');
-		const seconds = String(now.getSeconds()).padStart(2, '0');
-		const timeString = `${hours}:${minutes}:${seconds}`;
-		document.getElementById('live-time').textContent = timeString;
-	}
+    <script>
+    // Show current date in Indian Tamil Nadu format (DD-MMM-YYYY, IST)
+    function updateDate() {
+        const now = new Date();
+        // Convert to IST (Indian Standard Time)
+        const options = { timeZone: 'Asia/Kolkata', day: '2-digit', month: 'short', year: 'numeric' };
+        const dateString = now.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+        document.getElementById('current-date').textContent = dateString;
+    }
 
-	// Update immediately and then every second
-	updateTime();
-	setInterval(updateTime, 1000);
-	</script>
+    function updateTime() {
+        const now = new Date();
+        const options = { timeZone: 'Asia/Kolkata' };
+        const istNow = new Date(now.toLocaleString('en-US', options));
+        const hours = String(istNow.getHours()).padStart(2, '0');
+        const minutes = String(istNow.getMinutes()).padStart(2, '0');
+        const seconds = String(istNow.getSeconds()).padStart(2, '0');
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        document.getElementById('live-time').textContent = timeString;
+    }
+
+    // Update date and time immediately and then every second
+    updateDate();
+    updateTime();
+    setInterval(updateTime, 1000);
+</script>
 
 
 					<div class="validity d-block"><span >VALID</span></div>
